@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker and move the camera
-        mMap.addMarker(new MarkerOptions().position(startLocation));
+        mMap.addMarker(new MarkerOptions().position(startLocation).title("Marker"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(startLocation));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
     }
