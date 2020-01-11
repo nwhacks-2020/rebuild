@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -32,7 +33,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment == null) {
+            Toast.makeText(this, "Could not instantiate map.", Toast.LENGTH_SHORT)
+                    .show();
+        }
+        else {
+            mapFragment.getMapAsync(this);
+        }
 
         requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION);
     }
