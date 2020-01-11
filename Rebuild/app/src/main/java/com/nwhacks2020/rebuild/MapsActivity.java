@@ -1,8 +1,13 @@
 package com.nwhacks2020.rebuild;
 
-import androidx.fragment.app.FragmentActivity;
-
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,9 +18,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private GoogleMap mMap;
 
     private LatLng startLocation = new LatLng(-34, 151);
+    @SuppressWarnings("FieldCanBeLocal")
     private float startZoom = 17;
 
     @Override
@@ -26,6 +33,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
 
@@ -47,4 +56,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(startLocation));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
     }
+
+    // For permission, use Manifest.permission
+    private static void requestPermissions(
+            Activity thisActivity,
+            @SuppressWarnings("SameParameterValue") String permission) {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(thisActivity, permission)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            //noinspection StatementWithEmptyBody
+            if (ActivityCompat.shouldShowRequestPermissionRationale(thisActivity,
+                    Manifest.permission.READ_CONTACTS)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(thisActivity, new String[]{permission},0);
+            }
+
+        }
+    }
+
 }
