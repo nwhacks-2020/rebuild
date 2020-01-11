@@ -15,7 +15,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
-    private LatLng startLocation = new LatLng(-34, 151);
+    private LatLng startLocation = new LatLng(49.262599, -123.244944);
     private float startZoom = 17;
 
     @Override
