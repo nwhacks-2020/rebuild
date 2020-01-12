@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class RebuildDataStructure {
 
     private static final String TAG = RebuildDataStructure.class.getName();
@@ -27,8 +27,17 @@ public class RebuildDataStructure {
         gson = new Gson();
     }
 
-    public void addMarkerToList(RebuildMarker newMarker) {
-        markerList.add(newMarker);
+    // Assesses uniqueness by coordinates
+    public void addMarkerIfNew(RebuildMarker marker) {
+        String id = marker.getLocation();
+
+        for (RebuildMarker m : markerList) {
+            if (m.getLocation().equals(id)) {
+                return;  // Already exists
+            }
+        }
+
+        markerList.add(marker);
     }
 
     public List<RebuildMarker> returnList(List<RebuildMarker> markerList) {
@@ -71,7 +80,7 @@ public class RebuildDataStructure {
                 continue;
             }
 
-            markerList.add(marker);
+            addMarkerIfNew(marker);
         }
 
     }
