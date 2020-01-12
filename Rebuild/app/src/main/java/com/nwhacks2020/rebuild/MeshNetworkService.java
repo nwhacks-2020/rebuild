@@ -13,11 +13,10 @@ public class MeshNetworkService extends Service {
 
     private static final String TAG = MeshNetworkService.class.getName();
 
-    private Integer counter = 0;
-
     @Override
     public void onCreate() {
         super.onCreate();
+
         Log.d(TAG, "Initialized.");
     }
 
@@ -35,8 +34,9 @@ public class MeshNetworkService extends Service {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
 
-            NearbyConnections.sendStringToAllEndpoints(context, "Counter: " + counter);
-            counter++;
+            NearbyConnections.sendStringToAllEndpoints(
+                    context, RebuildMarkerListSingleton.getInstance().toJson()
+            );
 
             repeatOperation();
 

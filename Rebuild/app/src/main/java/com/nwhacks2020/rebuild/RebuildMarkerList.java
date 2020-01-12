@@ -14,15 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class RebuildDataStructure {
+public class RebuildMarkerList {
 
-    private static final String TAG = RebuildDataStructure.class.getName();
+    private static final String TAG = RebuildMarkerList.class.getName();
 
     private List<RebuildMarker> markerList;
 
     private Gson gson;
 
-    public RebuildDataStructure() {
+    public RebuildMarkerList() {
         markerList = new ArrayList<>();
         gson = new Gson();
     }
