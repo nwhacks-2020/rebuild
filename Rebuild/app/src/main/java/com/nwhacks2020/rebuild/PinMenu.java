@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class PinMenu extends FragmentActivity {
     String items[] = new String[] {" DANGER", "SHELTER","FOOD","WATER","NEED_HELP"};
@@ -50,6 +51,9 @@ public class PinMenu extends FragmentActivity {
                     type
             ));
         }
+
+        Vibrate.trigger(this, 250);
+        Toast.makeText(this, "Created a new marker.", Toast.LENGTH_LONG).show();
 
         finish();
     }
