@@ -4,8 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.View;
 import android.location.LocationManager;
@@ -18,6 +20,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,14 +41,19 @@ import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = MapsActivity.class.getName();
+    LocationManager mLocationManager;
 
     @SuppressWarnings("FieldCanBeLocal")
     private GoogleMap mMap;
@@ -49,8 +63,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @SuppressWarnings("FieldCanBeLocal")
     private float startZoom = 17;
 
+    private FusedLocationProviderClient fusedLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            Log.i(TAG, location.getLatitude() + ", " + location.getLongitude());
+
+                            LatLng myLocation = new LatLng(latitude, longitude);
+
+                            mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker"));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+                            mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
+                        }
+                    }
+                });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -85,6 +123,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
     }
 
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
 
     /**
      * Manipulates the map once available.
@@ -102,21 +157,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double longitude;
         double latitude;
 
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if(location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
-        else {
-            latitude = 49.262185;
-            longitude = -123.245385;
-        }
+        Location location = getLastKnownLocation();
+
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
 
         LatLng myLocation = new LatLng(latitude, longitude);
-
-        System.out.println(longitude);
-        System.out.println(latitude);
 
         // Add a marker and move the camera
         mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker"));
