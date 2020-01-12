@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp" >
+    android:orientation="vertical">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -64,12 +63,19 @@
 
 </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        app:srcCompat="@android:drawable/ic_menu_myplaces" />
+        android:layout_alignParentEnd="true" >
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+    </LinearLayout>
 
 </RelativeLayout>
