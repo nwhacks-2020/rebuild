@@ -11,14 +11,10 @@ import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
 import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
 import com.google.android.gms.nearby.connection.DiscoveryOptions;
 import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
-import com.google.android.gms.nearby.connection.Payload;
-import com.google.android.gms.nearby.connection.PayloadCallback;
-import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static com.google.android.gms.nearby.connection.Strategy.P2P_CLUSTER;
@@ -31,6 +27,7 @@ public class NearbyConnections {
 
     private static Strategy STRATEGY = P2P_CLUSTER;
 
+    @SuppressWarnings("unused")
     public static String getDeviceId() {
         return DEVICE_ID;
     }
@@ -38,11 +35,12 @@ public class NearbyConnections {
     /*
      * P2P_CLUSTER by default.
      */
+    @SuppressWarnings("unused")
     public static void setStrategy(Strategy s) {
         STRATEGY = s;
     }
 
-
+    @SuppressWarnings({"unused", "WeakerAccess"})
     public static void startAdvertising(
             final Context context,
             final ConnectionLifecycleCallback connectionLifecycleCallback) {
@@ -72,7 +70,8 @@ public class NearbyConnections {
                         });
     }
 
-    private void startDiscovery(
+    @SuppressWarnings("unused")
+    public static void startDiscovery(
             final Context context,
             final ConnectionLifecycleCallback connectionLifecycleCallback) {
         DiscoveryOptions discoveryOptions =
@@ -130,9 +129,6 @@ public class NearbyConnections {
                             }
                         });
     }
-
-
-
 
 
 }
