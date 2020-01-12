@@ -38,6 +38,7 @@
         <item name="android:layout_marginTop">@dimen/margin</item>
         <item name="android:layout_marginLeft">@dimen/margin</item>
         <item name="android:layout_marginRight">@dimen/margin</item>
+        <item name="android:onClick">clicked</item>
     </style>
 
 </resources>

@@ -85,6 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Log.i(TAG, location.getLatitude() + ", " + location.getLongitude());
 
                             LatLng myLocation = new LatLng(latitude, longitude);
+                            CurrentLocationSingleton.setCurrentLocation(latitude, longitude);
 
                             mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker"));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
@@ -210,6 +211,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.clear();
 
+        Location current = getLastKnownLocation();
+        mMap.addMarker(new MarkerOptions().position(new LatLng(
+                current.getLatitude(),
+                current.getLongitude()
+        ))).setZIndex(Float.MAX_VALUE);
+
         for (RebuildMarker m : markers) {
 
             int iconDrawable = 0;
@@ -259,7 +266,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void openPinMenu() {
         Intent intent = new Intent(this, PinMenu.class);
-        startActivityForResult(intent,1);
+        startActivity(intent);
     }
 
     private Location getLastKnownLocation() {
@@ -322,12 +329,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
 
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                myLocation.latitude,
-                myLocation.longitude,
-                MarkerTitles.NONE
-        ));
-
         addSampleMarkers();
         updateAllMarkers();
         repeatUpdateAllMarkers();
@@ -375,6 +376,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+
     @SuppressLint("MissingPermission")
     private void getLastLocation(){
         if (checkPermissions()) {
@@ -426,6 +428,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Location mLastLocation = locationResult.getLastLocation();
             personLocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
             mMap.addMarker(new MarkerOptions().position(personLocation).title("Marker"));
+
+            CurrentLocationSingleton.setCurrentLocation(personLocation.latitude, personLocation.longitude);
 
         }
     };

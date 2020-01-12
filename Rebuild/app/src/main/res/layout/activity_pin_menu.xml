@@ -56,8 +56,7 @@
         android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_danger"
         style="@style/PinMenuButton"
-        android:text="DANGER"
-        android:onClick="clicked" />
+        android:text="DANGER" />
     <Button
         android:id="@+id/buttonWater"
         android:layout_width="match_parent"

@@ -2,6 +2,8 @@ package com.nwhacks2020.rebuild;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Random;
+
 @SuppressWarnings("WeakerAccess")
 public class RebuildMarker {
 
@@ -38,7 +40,6 @@ public class RebuildMarker {
         return jsonKeyMarkerType;
     }
 
-
     public double getLatitude() {
         return latitude;
     }
@@ -59,5 +60,10 @@ public class RebuildMarker {
 
     public static MarkerTitles toMarkerTitle(String s) {
         return MarkerTitles.valueOf(s.toUpperCase());
+    }
+
+    public void shiftToAvoidConflict() {
+        latitude += (new Random().nextInt(20)-10) * 0.00002f;
+        longitude += (new Random().nextInt(20)-10) * 0.00002f;
     }
 }
