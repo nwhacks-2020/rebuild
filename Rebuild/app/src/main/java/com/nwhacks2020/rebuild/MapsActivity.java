@@ -2,10 +2,13 @@ package com.nwhacks2020.rebuild;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -16,8 +19,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.nearby.Nearby;
+import com.google.android.gms.nearby.connection.ConnectionInfo;
+import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
+import com.google.android.gms.nearby.connection.ConnectionResolution;
+import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
+import com.google.android.gms.nearby.connection.Payload;
+import com.google.android.gms.nearby.connection.PayloadCallback;
+import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
+
+import java.util.Arrays;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+    private static final String TAG = MapsActivity.class.getName();
 
     @SuppressWarnings("FieldCanBeLocal")
     private GoogleMap mMap;
@@ -43,6 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
+        startBroadcasting();
     }
 
 
@@ -85,6 +102,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ActivityCompat.requestPermissions(thisActivity, new String[]{permission},0);
             }
 
+        }
+    }
+
+    // FUNCTIONALITY FOR NearbyConnections
+
+    private void startBroadcasting() {
+        final Context context = this;
+        // Lifecycle functionality
+        final ConnectionLifecycleCallback connectionLifecycleCallback =
+                new ConnectionLifecycleCallback() {
+                    @Override
+                    public void onConnectionInitiated(
+                            @NonNull String endpointId,
+                            @NonNull ConnectionInfo connectionInfo) {
+
+                        // Automatically accept the connection on both sides.
+                        Nearby.getConnectionsClient(context)
+                                .acceptConnection(endpointId, new ReceiveMarkersPayloadListener());
+                    }
+
+                    @Override
+                    public void onConnectionResult(@NonNull String endpointId,
+                                                   ConnectionResolution result) {
+                        switch (result.getStatus().getStatusCode()) {
+                            case ConnectionsStatusCodes.STATUS_OK:
+                                // We're connected! Can now start sending and receiving data.
+                                break;
+                            case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
+                                // The connection was rejected by one or both sides.
+                                break;
+                            case ConnectionsStatusCodes.STATUS_ERROR:
+                                // The connection broke before it was able to be accepted.
+                                break;
+                            default:
+                                // Unknown status code
+                        }
+                    }
+
+                    @Override
+                    public void onDisconnected(@NonNull String endpointId) {
+                        // No action taken
+                    }
+                };
+
+
+        NearbyConnections.startAdvertising(this, connectionLifecycleCallback);
+    }
+
+
+    private static class ReceiveMarkersPayloadListener extends PayloadCallback {
+
+        @Override
+        public void onPayloadReceived(@NonNull String endpointId, Payload payload) {
+            // This always gets the full data of the payload. Will be null if it's not a BYTES
+            // payload.
+            // Check the payload type with payload.getType().
+            byte[] receivedBytes = payload.asBytes();
+            if (receivedBytes != null) {
+                Log.d(TAG, "Received data: " + Arrays.toString(receivedBytes));
+            }
+            else {
+                Log.d(TAG, "Empty data received.");
+            }
+
+            //TODO: Do something with the data.
+        }
+
+        @Override
+        public void onPayloadTransferUpdate(@NonNull String endpointId,
+                                            @NonNull PayloadTransferUpdate update) {
+            // Action after the completed call to onPayloadReceived
         }
     }
 
