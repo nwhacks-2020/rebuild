@@ -16,6 +16,7 @@ public class OnboardingActivity extends FragmentActivity {
 
     public void nextActivity(View view) {
         startActivity(new Intent(this, MapsActivity.class));
+        finish();
     }
 
 
