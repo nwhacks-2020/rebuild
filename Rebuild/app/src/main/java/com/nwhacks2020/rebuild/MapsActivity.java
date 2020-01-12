@@ -4,8 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.location.LocationManager;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -90,9 +92,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        double longitude = location.getLongitude();
+        double latitude = location.getLatitude();
+
+        LatLng myLocation = new LatLng(latitude, longitude);
+
+        System.out.println(longitude);
+        System.out.println(latitude);
+
         // Add a marker and move the camera
-        mMap.addMarker(new MarkerOptions().position(startLocation).title("Marker"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(startLocation));
+        mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
     }
 
