@@ -33,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -43,7 +44,6 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -133,6 +133,100 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, MeshNetworkService.class));
     }
 
+    private void addSampleMarkers() {
+
+        // Centre for Drug Research
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+            49.262201, -123.243708, MarkerTitles.DANGER
+        ));
+
+        // UBC Chem and Biological Engineering
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.262555, -123.247261, MarkerTitles.DANGER
+        ));
+
+        // Centre for Blood Research
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.262569, -123.245156, MarkerTitles.SHELTER
+        ));
+
+        // UBC Skate Park
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.260938, -123.244514, MarkerTitles.SHELTER
+        ));
+
+        // Starbucks
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.261307, -123.246550, MarkerTitles.FOOD
+        ));
+
+        // Purdy Pavilion
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.263368, -123.245978, MarkerTitles.FOOD
+        ));
+
+
+        // BC Ambulance Station (South)
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.263034, -123.243475, MarkerTitles.WATER
+        ));
+
+        // Walkway
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.262718, -123.244174, MarkerTitles.NEED_HELP
+        ));
+
+        // Campus Energy Centre
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.261745, -123.245134, MarkerTitles.POWER
+        ));
+
+    }
+
+    private void updateAllMarkers() {
+        List<RebuildMarker> markers = RebuildMarkerListSingleton.getInstance().getList();
+
+        mMap.clear();
+
+        for (RebuildMarker m : markers) {
+
+            int iconDrawable = R.drawable.danger;
+            switch(m.getMarkerType()) {
+                case DANGER:
+                    iconDrawable = R.drawable.danger;
+                    break;
+                case SHELTER:
+                    iconDrawable = R.drawable.shelter;
+                    break;
+                case FOOD:
+                    iconDrawable = R.drawable.food;
+                    break;
+                case WATER:
+                    iconDrawable = R.drawable.water;
+                    break;
+                case NEED_HELP:
+                    iconDrawable = R.drawable.needhelp;
+                    break;
+                case POWER:
+                    iconDrawable = R.drawable.power;
+                    break;
+            }
+
+            int dim = 100;
+            Bitmap b = BitmapFactory.decodeResource(getResources(), iconDrawable);
+            Bitmap smallMarker = Bitmap.createScaledBitmap(b, dim, dim, false);
+            BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+
+            LatLng location = new LatLng(m.getLatitude(), m.getLongitude());
+            mMap.addMarker(new MarkerOptions()
+                    .position(location)
+                    .title(m.getMarkerType().toString())
+                    .icon(icon)
+            );
+        }
+
+    }
+
     public void openPinMenu() {
         Intent intent = new Intent(this, PinMenu.class);
         startActivityForResult(intent,1);
@@ -198,6 +292,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
+
+        addSampleMarkers();
+        updateAllMarkers();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

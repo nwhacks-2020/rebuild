@@ -47,6 +47,8 @@ public class RebuildMarker {
         return longitude;
     }
 
+    public MarkerTitles getMarkerType() { return markerType; }
+
     public String getLocation() {
         return "" + latitude + "," + longitude;
     }

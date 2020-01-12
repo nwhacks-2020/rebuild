@@ -40,7 +40,7 @@ public class RebuildMarkerList {
         markerList.add(marker);
     }
 
-    public List<RebuildMarker> returnList(List<RebuildMarker> markerList) {
+    public List<RebuildMarker> getList() {
         return markerList;
     }
 
