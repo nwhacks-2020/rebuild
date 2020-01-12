@@ -57,4 +57,8 @@ public class PinMenu extends FragmentActivity {
 
         finish();
     }
+
+    public void backPressed(View view) {
+        finish();
+    }
 }

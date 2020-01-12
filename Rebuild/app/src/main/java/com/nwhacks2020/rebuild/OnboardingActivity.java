@@ -19,5 +19,15 @@ public class OnboardingActivity extends FragmentActivity {
         finish();
     }
 
+    public void nextActivityWithMarkers(View view) {
+        DemoModeSingleton.setHasDemoMarkers(true);
+        nextActivity(view);
+    }
+
+    public void nextActivityWithoutMarkers(View view) {
+        DemoModeSingleton.setHasDemoMarkers(false);
+        nextActivity(view);
+    }
+
 
 }

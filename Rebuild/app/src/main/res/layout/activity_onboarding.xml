@@ -53,14 +53,38 @@
         android:src="@drawable/onboarding_card_2"
         tools:targetApi="o" />
 
-    <ImageButton
-        android:id="@+id/btn_onboarding_start"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:background="@null"
-        android:src="@drawable/btn_onboarding_start"
-        android:onClick="nextActivity"/>
+        android:gravity="center" >
+
+        <ImageButton
+            android:id="@+id/btn_onboarding_with_markers"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:src="@drawable/btn_onboarding_with_markers"
+            android:onClick="nextActivityWithMarkers" />
+
+        <ImageButton
+            android:id="@+id/btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:src="@drawable/btn_onboarding_without_markers"
+            android:onClick="nextActivityWithoutMarkers"/>
+
+    </LinearLayout>
+
+    <!-- Button for single start -->
+<!--    <ImageButton-->
+<!--        android:id="@+id/btn_onboarding_start"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:background="@null"-->
+<!--        android:src="@drawable/btn_onboarding_start"-->
+<!--        android:onClick="nextActivity"/>-->
 
 </LinearLayout>
