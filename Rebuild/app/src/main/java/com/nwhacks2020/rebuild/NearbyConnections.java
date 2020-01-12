@@ -115,11 +115,14 @@ public class NearbyConnections {
     public static void sendStringToAllEndpoints(Context context, String s) {
         Payload bytesPayload = Payload.fromBytes(s.getBytes());
 
-
-        Log.d(TAG, "Sending data.");
-        for (String device : connectedDevices.keySet()) {
-
-            Nearby.getConnectionsClient(context).sendPayload(device, bytesPayload);
+        if (connectedDevices.isEmpty()) {
+            Log.d(TAG, "No devices to send to.");
+        }
+        else {
+            Log.d(TAG, "Sending data to " + connectedDevices.size() + " devices.");
+            for (String device : connectedDevices.keySet()) {
+                Nearby.getConnectionsClient(context).sendPayload(device, bytesPayload);
+            }
         }
     }
 
