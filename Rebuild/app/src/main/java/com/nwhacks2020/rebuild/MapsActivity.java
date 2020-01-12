@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.location.LocationManager;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -93,10 +94,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        double longitude;
+        double latitude;
+
         LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        double longitude = location.getLongitude();
-        double latitude = location.getLatitude();
+        if(location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        else {
+            latitude = 49.262185;
+            longitude = -123.245385;
+        }
 
         LatLng myLocation = new LatLng(latitude, longitude);
 
