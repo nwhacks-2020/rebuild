@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:orientation="vertical"
     tools:context=".PinMenu">
-
-    <ListView
-        android:id="@+id/listviewID"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:background="@drawable/type_background"
+        android:layout_marginTop="20dp"
+        android:
+        android:id="@+id/buttonDanger"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_danger"
+        android:text="DANGER"
+        android:textSize="30sp"/>
+    <Button
+        android:background="@drawable/type_background"
+        android:layout_margin="20dp"
+        android:id="@+id/buttonWater"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_water"
+        android:text="WATER"
+        android:textSize="30sp"/>
+</LinearLayout>

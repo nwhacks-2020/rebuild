@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
 
                 android:text="@string/app_name"
-                android:textColor="@color/colorGreen"
+                android:textColor="@color/colorPrimary"
                 android:textSize="28sp" />
 
 
