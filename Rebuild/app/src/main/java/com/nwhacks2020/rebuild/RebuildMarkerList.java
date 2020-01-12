@@ -29,6 +29,11 @@ public class RebuildMarkerList {
 
     // Assesses uniqueness by coordinates
     public void addMarkerIfNew(RebuildMarker marker) {
+        // Skip other peoples' locations
+        if (marker.getMarkerType() == MarkerTitles.NONE) {
+            return;
+        }
+
         String id = marker.getLocation();
 
         for (RebuildMarker m : markerList) {
