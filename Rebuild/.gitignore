@@ -57,6 +57,8 @@ captures/
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
+.cxx
+google_maps_api.xml
 .cxx/
 
 # Google Services (e.g. APIs or Firebase)
@@ -84,3 +86,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+# Secrets
+google_maps_api.xml
