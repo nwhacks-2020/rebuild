@@ -3,6 +3,7 @@ package com.nwhacks2020.rebuild;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -59,8 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                openPinMenu();
             }
         });
         if (mapFragment == null) {
@@ -74,6 +74,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
         startBroadcasting();
+    }
+
+    public void openPinMenu(){
+        Intent intent = new Intent(this, PinMenu.class);
+        startActivity(intent);
     }
 
 

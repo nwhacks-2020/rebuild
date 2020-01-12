@@ -1,3 +1,5 @@
+package com.nwhacks2020.rebuild;
+
 public class RebuildMarker {
     private double latitude;
     private double longitude;

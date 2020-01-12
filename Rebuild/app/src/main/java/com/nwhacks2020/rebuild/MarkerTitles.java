@@ -1,3 +1,5 @@
+package com.nwhacks2020.rebuild;
+
 public enum MarkerTitles {
     DANGER,
     SHELTER,
