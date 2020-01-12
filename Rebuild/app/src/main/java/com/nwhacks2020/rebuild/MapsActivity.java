@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
@@ -145,6 +146,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 49.262555, -123.247261, MarkerTitles.DANGER
         ));
 
+        // Djavad Mowafaghian
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.264580, -123.244279, MarkerTitles.DANGER
+        ));
+
         // Centre for Blood Research
         RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
                 49.262569, -123.245156, MarkerTitles.SHELTER
@@ -165,7 +171,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 49.263368, -123.245978, MarkerTitles.FOOD
         ));
 
-
         // BC Ambulance Station (South)
         RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
                 49.263034, -123.243475, MarkerTitles.WATER
@@ -181,6 +186,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 49.261745, -123.245134, MarkerTitles.POWER
         ));
 
+        // The UBC Department of Psychiatry
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                49.263819, -123.244550, MarkerTitles.POWER
+        ));
+
+    }
+
+    private void repeatUpdateAllMarkers() {
+        final Context context = this;
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+
+            updateAllMarkers();
+            Log.d(TAG, "Updated markers.");
+            repeatUpdateAllMarkers();
+
+        }, 4000);
     }
 
     private void updateAllMarkers() {
@@ -190,8 +212,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (RebuildMarker m : markers) {
 
-            int iconDrawable = R.drawable.danger;
+            int iconDrawable = 0;
             switch(m.getMarkerType()) {
+                case NONE:
+                    break;
                 case DANGER:
                     iconDrawable = R.drawable.danger;
                     break;
@@ -212,17 +236,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     break;
             }
 
-            int dim = 100;
-            Bitmap b = BitmapFactory.decodeResource(getResources(), iconDrawable);
-            Bitmap smallMarker = Bitmap.createScaledBitmap(b, dim, dim, false);
-            BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
+            if (iconDrawable == 0) {
+                LatLng location = new LatLng(m.getLatitude(), m.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(location));
+            }
+            else {
+                int dim = 100;
+                Bitmap b = BitmapFactory.decodeResource(getResources(), iconDrawable);
+                Bitmap smallMarker = Bitmap.createScaledBitmap(b, dim, dim, false);
+                BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(smallMarker);
 
-            LatLng location = new LatLng(m.getLatitude(), m.getLongitude());
-            mMap.addMarker(new MarkerOptions()
-                    .position(location)
-                    .title(m.getMarkerType().toString())
-                    .icon(icon)
-            );
+                LatLng location = new LatLng(m.getLatitude(), m.getLongitude());
+                mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .title(m.getMarkerType().toString())
+                        .icon(icon)
+                );
+            }
         }
 
     }
@@ -289,12 +319,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng myLocation = new LatLng(latitude, longitude);
 
         // Add a marker and move the camera
-        mMap.addMarker(new MarkerOptions().position(myLocation).title("Marker"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
 
+        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
+                myLocation.latitude,
+                myLocation.longitude,
+                MarkerTitles.NONE
+        ));
+
         addSampleMarkers();
         updateAllMarkers();
+        repeatUpdateAllMarkers();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
