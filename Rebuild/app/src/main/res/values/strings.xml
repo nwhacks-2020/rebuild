@@ -9,4 +9,7 @@
     <string name="water">Water</string>
     <string name="danger">Danger</string>
     <string name="pin_menu_title">ADD MARKER</string>
+
+    <string name="title_activity_onboarding">OnboardingActivity</string>
+    <string name="onboarding_welcome_to">Welcome to </string>
 </resources>

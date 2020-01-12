@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorOffWhite"
+    android:orientation="vertical"
+    tools:context=".OnboardingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        tools:targetApi="o">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginEnd="5dp"
+            style="@style/OnboardingDescription"
+            android:textColor="@color/colorBlack"
+            android:text="@string/onboarding_welcome_to" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/OnboardingDescription"
+            android:textColor="@color/colorPrimary"
+            android:textFontWeight="600"
+            android:text="@string/app_name_all_caps"
+            tools:targetApi="p" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/onboarding_card_1"
+        tools:targetApi="o" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/onboarding_card_2"
+        tools:targetApi="o" />
+
+    <ImageButton
+        android:id="@+id/btn_onboarding_start"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:src="@drawable/btn_onboarding_start"
+        android:onClick="nextActivity"/>
+
+</LinearLayout>

@@ -7,5 +7,7 @@
     <color name="light_grey">#EDEDED</color>
     <color name="black_overlay">#66000000</color>
 
+    <color name="colorBlack">#000</color>
+
     <color name="transparent">#80000000</color>
 </resources>
