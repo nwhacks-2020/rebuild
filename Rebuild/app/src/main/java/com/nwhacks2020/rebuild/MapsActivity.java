@@ -1,16 +1,17 @@
 package com.nwhacks2020.rebuild;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
-import android.view.View;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,6 @@ import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 
@@ -60,8 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mapFragment == null) {
             Toast.makeText(this, "Could not instantiate map.", Toast.LENGTH_SHORT)
                     .show();
-        }
-        else {
+        } else {
             mapFragment.getMapAsync(this);
         }
 
@@ -80,7 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startDiscovering();
     }
 
-    public void openPinMenu(){
+    public void openPinMenu() {
         Intent intent = new Intent(this, PinMenu.class);
         startActivity(intent);
     }
@@ -99,10 +98,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
         double longitude;
         double latitude;
 
-        LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        @SuppressLint("MissingPermission")  // Permissions requested above
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if(location != null) {
             latitude = location.getLatitude();
