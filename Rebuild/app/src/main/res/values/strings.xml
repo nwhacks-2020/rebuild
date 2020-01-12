@@ -8,4 +8,5 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">REBUILD</string>
     <string name="water">Water</string>
+    <string name="danger">Danger</string>
 </resources>

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +44,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -143,7 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void openPinMenu() {
         Intent intent = new Intent(this, PinMenu.class);
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 
     private Location getLastKnownLocation() {
@@ -208,6 +212,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                String strEditText = data.getStringExtra("editTextValue");
+                switch (strEditText){
+                    case "Danger":
+                        if(personLocation == null){
+                            Log.i(TAG,"FAIL");
+                        }else {
+                            MarkerOptions marker = new MarkerOptions().position(personLocation).title("DANGER");
+                            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_danger));
+                            mMap.addMarker(marker);
+                        }
+
+                }
+            }
+        }
+    }
+
     // For permission, use Manifest.permission
     private static void requestPermissions(
             Activity thisActivity,
@@ -244,7 +268,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 } else {
                                     Log.d(TAG,Double.toString(location.getLatitude()));
                                     personLocation = new LatLng(location.getLatitude(),location.getLongitude());
-                                    mMap.addMarker(new MarkerOptions().position(personLocation).title("Marker"));
+                                    Bitmap danger = BitmapFactory.decodeResource(getResources(),R.drawable.danger);
+                                    danger = Bitmap.createScaledBitmap(danger, 40,40,false);
+                                    mMap.addMarker(new MarkerOptions().position(personLocation).title("Marker").icon(BitmapDescriptorFactory.fromBitmap(danger)));
                                 }
                             }
                         }

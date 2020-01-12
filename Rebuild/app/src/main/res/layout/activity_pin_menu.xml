@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_danger"
         android:text="DANGER"
-        android:textSize="30sp"/>
+        android:textSize="30sp"
+        android:onClick="clicked"/>
     <Button
         android:background="@drawable/type_background"
         android:layout_marginTop="@dimen/margin"
