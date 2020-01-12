@@ -84,3 +84,5 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
+# Secrets
+google_maps_api.xml
