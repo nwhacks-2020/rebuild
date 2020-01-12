@@ -20,6 +20,11 @@ Install [Android Studio](https://developer.android.com/studio/) and import the p
 
 Generate a [Google Maps SDK API key (step 1)](https://developers.google.com/maps/documentation/android-sdk/get-api-key).
 
-In the file `Rebuild/app/src/debug/res/values/google_maps_api.xml`, replace the value of the placeholder key with your API key.
+Duplicate the Google Maps API key template file to hold the API key:
+```shell
+cp Rebuild/app/src/debug/res/values/google_maps_api_template.xml Rebuild/app/src/debug/res/values/google_maps_api.xml
+```
+
+In the new file `Rebuild/app/src/debug/res/values/google_maps_api.xml`, uncomment the line with the key and replace the value of the placeholder with your API key. This new file will not be tracked by Git.
 
 Build and run the Android application on a physical or virtual device.

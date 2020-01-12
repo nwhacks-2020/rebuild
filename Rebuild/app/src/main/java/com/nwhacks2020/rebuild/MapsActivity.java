@@ -8,7 +8,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.location.LocationManager;
-
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,8 +22,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
 import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
@@ -33,6 +30,8 @@ import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 
@@ -55,7 +54,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+        if (mapFragment == null) {
+            Toast.makeText(this, "Could not instantiate map.", Toast.LENGTH_SHORT)
+                    .show();
+        }
+        else {
+            mapFragment.getMapAsync(this);
+        }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -65,17 +71,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         .setAction("Action", null).show();
             }
         });
-        if (mapFragment == null) {
-            Toast.makeText(this, "Could not instantiate map.", Toast.LENGTH_SHORT)
-                    .show();
-        }
-        else {
-            mapFragment.getMapAsync(this);
-        }
+
 
         requestPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        startBroadcasting();
+        startAdvertising();
+        startDiscovering();
     }
 
 
@@ -133,10 +134,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // FUNCTIONALITY FOR NearbyConnections
 
-    private void startBroadcasting() {
+    private void startAdvertising() {
         final Context context = this;
-        // Lifecycle functionality
-        final ConnectionLifecycleCallback connectionLifecycleCallback =
+
+        final ConnectionLifecycleCallback advertiserCallback =
                 new ConnectionLifecycleCallback() {
                     @Override
                     public void onConnectionInitiated(
@@ -173,7 +174,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 };
 
 
-        NearbyConnections.startAdvertising(this, connectionLifecycleCallback);
+        NearbyConnections.startAdvertising(this, advertiserCallback);
+    }
+
+    private void startDiscovering() {
+        final Context context = this;
+
+        final ConnectionLifecycleCallback discovererCallback =
+                new ConnectionLifecycleCallback() {
+                    @Override
+                    public void onConnectionInitiated(
+                            @NonNull String endpointId,
+                            @NonNull ConnectionInfo connectionInfo) {
+
+                        // Automatically accept the connection on both sides.
+                        Nearby.getConnectionsClient(context)
+                                .acceptConnection(endpointId, new ReceiveMarkersPayloadListener());
+                    }
+
+                    @Override
+                    public void onConnectionResult(@NonNull String endpointId,
+                                                   ConnectionResolution result) {
+                        switch (result.getStatus().getStatusCode()) {
+                            case ConnectionsStatusCodes.STATUS_OK:
+                                // We're connected! Can now start sending and receiving data.
+                                break;
+                            case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
+                                // The connection was rejected by one or both sides.
+                                break;
+                            case ConnectionsStatusCodes.STATUS_ERROR:
+                                // The connection broke before it was able to be accepted.
+                                break;
+                            default:
+                                // Unknown status code
+                        }
+                    }
+
+                    @Override
+                    public void onDisconnected(@NonNull String endpointId) {
+                        // No action taken
+                    }
+                };
+
+
+        NearbyConnections.startDiscovering(this, discovererCallback);
     }
 
 
