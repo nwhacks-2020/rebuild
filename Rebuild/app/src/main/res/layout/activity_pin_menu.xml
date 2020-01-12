@@ -3,80 +3,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F5F5F5"
     android:orientation="vertical"
     tools:context=".PinMenu">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/transparent">
+
+        <ImageView
+            android:id="@+id/background_top_rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:src="@drawable/activity_title_bar"
+            android:background="@null"
+            app:background="@color/transparent"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                style="@style/ActivityTitle"
+                android:text="@string/pin_menu_title" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
     <Button
-        android:background="@drawable/type_background"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonDanger"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_danger"
+        style="@style/PinMenuButton"
         android:text="DANGER"
-        android:textSize="30sp"
-        android:onClick="clicked"/>
+        android:onClick="clicked" />
     <Button
-        android:background="@drawable/type_background"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonWater"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_water"
-        android:text="WATER"
-        android:textSize="30sp"/>
+        style="@style/PinMenuButton"
+        android:text="WATER"/>
     <Button
-        android:background="@drawable/type_background"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonFood"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_food"
-        android:text="FOOD"
-        android:textSize="30sp"/>
+        style="@style/PinMenuButton"
+        android:text="FOOD"/>
     <Button
-        android:background="@drawable/type_background"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonShelter"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_shelter"
-        android:text="SHELTER"
-        android:textSize="30sp"/>
+        style="@style/PinMenuButton"
+        android:text="SHELTER"/>
     <Button
-        android:background="@drawable/type_background"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonPower"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_power"
-        android:text="POWER"
-        android:textSize="30sp"/>
+        style="@style/PinMenuButton"
+        android:text="POWER" />
+
     <Button
-        android:background="@drawable/type_background"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonNeedsHelp"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:drawableLeft="@drawable/ic_needhelp"
-        android:text="NEEDS HELP"
-        android:textSize="30sp"/>
+        style="@style/PinMenuButton"
+        android:text="NEEDS HELP" />
 </LinearLayout>

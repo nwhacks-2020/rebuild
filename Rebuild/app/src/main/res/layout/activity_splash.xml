@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="@drawable/splash_background"
     android:orientation="vertical"
     tools:context=".SplashActivity">
 
@@ -16,9 +16,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/app_icon"
+        android:src="@drawable/logo"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="250dp"></ImageView>
+        android:layout_marginTop="250dp" />
 
     <TextView
         android:id="@+id/fullscreen_content"
@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:gravity='center_horizontal'
         android:keepScreenOn="true"
-        android:text="@string/dummy_content"
+        android:text="@string/app_name_all_caps"
         android:textColor="#FFFFFF"
         android:textSize="50sp"
         android:textStyle="bold" />

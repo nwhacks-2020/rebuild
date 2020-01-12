@@ -13,39 +13,39 @@
     android:orientation='vertical'>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/transparent">
 
-        <View
+        <ImageView
             android:id="@+id/background_top_rectangle"
-            android:layout_width="wrap_content"
-            android:layout_height="80sp" />
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:src="@drawable/activity_title_bar"
+            android:background="@null"
+            app:background="@color/transparent"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="7dp" >
+            android:orientation="horizontal" >
 
-            <!-- layout_width = layout_height + paddingLeft + paddingRight -->
             <ImageView
-                android:layout_width="50dp"
+                android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/logo_marker"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/logo" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
 
-                android:text="@string/app_name"
-                android:textColor="@color/colorPrimary"
-                android:textSize="28sp" />
-
+                style="@style/ActivityTitle"
+                android:text="@string/app_name_all_caps" />
 
 
         </LinearLayout>
@@ -69,12 +69,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <ImageButton
             android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="30dp"
-            app:srcCompat="@android:drawable/ic_menu_myplaces" />
+            android:background="@null"
+            android:src="@drawable/btn_add"
+            android:scaleType="fitXY" />
 
     </LinearLayout>
 

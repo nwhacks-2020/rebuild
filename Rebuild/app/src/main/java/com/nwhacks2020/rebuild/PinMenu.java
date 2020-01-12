@@ -1,6 +1,7 @@
 package com.nwhacks2020.rebuild;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class PinMenu extends AppCompatActivity {
+public class PinMenu extends FragmentActivity {
     String items[] = new String[] {" DANGER", "SHELTER","FOOD","WATER","NEED_HELP"};
 
     @Override

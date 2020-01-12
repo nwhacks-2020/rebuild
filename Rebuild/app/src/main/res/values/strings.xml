@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Rebuild</string>
+    <string name="app_name_all_caps">REBUILD</string>
     <string name="package_name">com.nwhacks2020.rebuild</string>
 
     <string name="title_activity_maps">Map</string>
 
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">REBUILD</string>
     <string name="water">Water</string>
     <string name="danger">Danger</string>
+    <string name="pin_menu_title">ADD MARKER</string>
 </resources>

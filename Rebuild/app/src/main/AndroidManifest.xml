@@ -24,7 +24,9 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity android:name=".PinMenu" />
+        <activity
+            android:name=".PinMenu"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
