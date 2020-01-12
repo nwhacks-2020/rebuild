@@ -1,4 +1,4 @@
-public enum Marker {
+public enum MarkerTitles {
     DANGER,
     SHELTER,
     FOOD,
