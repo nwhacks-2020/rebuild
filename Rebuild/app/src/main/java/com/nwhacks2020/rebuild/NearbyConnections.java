@@ -71,7 +71,7 @@ public class NearbyConnections {
     }
 
     @SuppressWarnings("unused")
-    public static void startDiscovery(
+    public static void startDiscovering(
             final Context context,
             final ConnectionLifecycleCallback connectionLifecycleCallback) {
         DiscoveryOptions discoveryOptions =
