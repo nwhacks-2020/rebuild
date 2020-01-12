@@ -3,13 +3,21 @@
     <string name="app_name_all_caps">REBUILD</string>
     <string name="package_name">com.nwhacks2020.rebuild</string>
 
-    <string name="title_activity_maps">Map</string>
-
+    <!-- Splash -->
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="water">Water</string>
-    <string name="danger">Danger</string>
-    <string name="pin_menu_title">ADD MARKER</string>
 
+    <!-- Onboarding -->
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="onboarding_welcome_to">Welcome to </string>
+
+    <!-- Maps -->
+    <string name="maps_devices_status_none">No devices connected.</string>
+    <string name="maps_devices_status_one">1 device connected.</string>
+    <string name="maps_devices_status_more"> devices connected.</string>
+    <string name="water">Water</string>
+    <string name="danger">Danger</string>
+
+    <!-- Pin Menu -->
+    <string name="pin_menu_title">ADD MARKER</string>
+
 </resources>

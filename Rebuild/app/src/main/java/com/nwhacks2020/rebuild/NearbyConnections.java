@@ -42,6 +42,10 @@ public class NearbyConnections {
         STRATEGY = s;
     }
 
+    public static int getNumberOfConnectedDevices() {
+        return connectedDevices.size();
+    }
+
     public static void startAdvertising(
             final Context context,
             final String connectionServiceId,

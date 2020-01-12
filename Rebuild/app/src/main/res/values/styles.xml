@@ -34,6 +34,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="MapsDevicesStatusText" parent="PrimaryFont">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="PinMenuButton" parent="PrimaryFont">
         <item name="android:textFontWeight" tools:targetApi="p">600</item>
         <item name="android:textSize">30sp</item>

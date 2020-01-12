@@ -36,7 +36,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/logo" />
 
             <TextView
@@ -51,6 +51,21 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/colorOffWhite" >
+
+        <TextView
+            android:id="@+id/maps_devices_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            style="@style/MapsDevicesStatusText"
+            android:text="@string/maps_devices_status_none" />
+
+    </LinearLayout>
 
     <fragment
         android:id="@+id/map"

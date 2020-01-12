@@ -18,6 +18,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -194,16 +195,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void repeatUpdateAllMarkers() {
+    private void repeatUpdateMarkersAndDevicesCount() {
         final Context context = this;
         Handler handler = new Handler();
         handler.postDelayed(() -> {
 
             updateAllMarkers();
-            Log.d(TAG, "Updated markers.");
-            repeatUpdateAllMarkers();
+            int devicesConnected = NearbyConnections.getNumberOfConnectedDevices();
+            if (devicesConnected == 0) {
+                setDevicesCount(getString(R.string.maps_devices_status_none));
+            }
+            else if (devicesConnected == 1) {
+                setDevicesCount(getString(R.string.maps_devices_status_one));
+            }
+            else {
+                setDevicesCount(devicesConnected + getString(R.string.maps_devices_status_more));
+            }
+
+            Log.d(TAG, "Updated markers and devices count.");
+            repeatUpdateMarkersAndDevicesCount();
 
         }, 4000);
+    }
+
+    private void setDevicesCount(String s) {
+        TextView view = findViewById(R.id.maps_devices_status);
+        view.setText(s);
     }
 
     private void updateAllMarkers() {
@@ -331,7 +348,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         addSampleMarkers();
         updateAllMarkers();
-        repeatUpdateAllMarkers();
+        repeatUpdateMarkersAndDevicesCount();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
