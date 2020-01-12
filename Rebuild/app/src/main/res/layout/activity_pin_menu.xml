@@ -8,8 +8,9 @@
     tools:context=".PinMenu">
     <Button
         android:background="@drawable/type_background"
-        android:layout_marginTop="20dp"
-        android:
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonDanger"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
@@ -19,12 +20,62 @@
         android:textSize="30sp"/>
     <Button
         android:background="@drawable/type_background"
-        android:layout_margin="20dp"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
         android:id="@+id/buttonWater"
         android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_water"
         android:text="WATER"
+        android:textSize="30sp"/>
+    <Button
+        android:background="@drawable/type_background"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:id="@+id/buttonFood"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_food"
+        android:text="FOOD"
+        android:textSize="30sp"/>
+    <Button
+        android:background="@drawable/type_background"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:id="@+id/buttonShelter"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_shelter"
+        android:text="SHELTER"
+        android:textSize="30sp"/>
+    <Button
+        android:background="@drawable/type_background"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:id="@+id/buttonPower"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_power"
+        android:text="POWER"
+        android:textSize="30sp"/>
+    <Button
+        android:background="@drawable/type_background"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:id="@+id/buttonNeedsHelp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_needhelp"
+        android:text="NEEDS HELP"
         android:textSize="30sp"/>
 </LinearLayout>
