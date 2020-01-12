@@ -18,6 +18,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -137,8 +138,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
 
-        startAdvertising();
-        startDiscovering();
+        // Start NearbyConnections
+        // Requires Fine Location
+        String connectionServiceId = getString(R.string.package_name);
+        NearbyConnections.startAdvertising(this, connectionServiceId, new ReceivePayloadListener());
+        NearbyConnections.startDiscovering(this, connectionServiceId, new ReceivePayloadListener());
+        startService(new Intent(this, MeshNetworkService.class));
     }
 
     public void openPinMenu() {
@@ -327,96 +332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    // FUNCTIONALITY FOR NearbyConnections
-
-    private void startAdvertising() {
-        final Context context = this;
-
-        final ConnectionLifecycleCallback advertiserCallback =
-                new ConnectionLifecycleCallback() {
-                    @Override
-                    public void onConnectionInitiated(
-                            @NonNull String endpointId,
-                            @NonNull ConnectionInfo connectionInfo) {
-
-                        // Automatically accept the connection on both sides.
-                        Nearby.getConnectionsClient(context)
-                                .acceptConnection(endpointId, new ReceiveMarkersPayloadListener());
-                    }
-
-                    @Override
-                    public void onConnectionResult(@NonNull String endpointId,
-                                                   ConnectionResolution result) {
-                        switch (result.getStatus().getStatusCode()) {
-                            case ConnectionsStatusCodes.STATUS_OK:
-                                // We're connected! Can now start sending and receiving data.
-                                break;
-                            case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                                // The connection was rejected by one or both sides.
-                                break;
-                            case ConnectionsStatusCodes.STATUS_ERROR:
-                                // The connection broke before it was able to be accepted.
-                                break;
-                            default:
-                                // Unknown status code
-                        }
-                    }
-
-                    @Override
-                    public void onDisconnected(@NonNull String endpointId) {
-                        // No action taken
-                    }
-                };
-
-
-        NearbyConnections.startAdvertising(this, advertiserCallback);
-    }
-
-    private void startDiscovering() {
-        final Context context = this;
-
-        final ConnectionLifecycleCallback discovererCallback =
-                new ConnectionLifecycleCallback() {
-                    @Override
-                    public void onConnectionInitiated(
-                            @NonNull String endpointId,
-                            @NonNull ConnectionInfo connectionInfo) {
-
-                        // Automatically accept the connection on both sides.
-                        Nearby.getConnectionsClient(context)
-                                .acceptConnection(endpointId, new ReceiveMarkersPayloadListener());
-                    }
-
-                    @Override
-                    public void onConnectionResult(@NonNull String endpointId,
-                                                   ConnectionResolution result) {
-                        switch (result.getStatus().getStatusCode()) {
-                            case ConnectionsStatusCodes.STATUS_OK:
-                                // We're connected! Can now start sending and receiving data.
-                                break;
-                            case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                                // The connection was rejected by one or both sides.
-                                break;
-                            case ConnectionsStatusCodes.STATUS_ERROR:
-                                // The connection broke before it was able to be accepted.
-                                break;
-                            default:
-                                // Unknown status code
-                        }
-                    }
-
-                    @Override
-                    public void onDisconnected(@NonNull String endpointId) {
-                        // No action taken
-                    }
-                };
-
-
-        NearbyConnections.startDiscovering(this, discovererCallback);
-    }
-
-
-    private static class ReceiveMarkersPayloadListener extends PayloadCallback {
+    private static class ReceivePayloadListener extends PayloadCallback {
 
         @Override
         public void onPayloadReceived(@NonNull String endpointId, Payload payload) {
@@ -425,13 +341,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Check the payload type with payload.getType().
             byte[] receivedBytes = payload.asBytes();
             if (receivedBytes != null) {
-                Log.d(TAG, "Received data: " + Arrays.toString(receivedBytes));
+                Log.d(TAG, "Received data: " + new String(receivedBytes));
             }
             else {
                 Log.d(TAG, "Empty data received.");
             }
 
-            //TODO: Do something with the data.
+            // TODO: Do something with the data!
         }
 
         @Override
