@@ -224,9 +224,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(personLocation == null){
                             Log.i(TAG,"FAIL");
                         }else {
-                            MarkerOptions marker = new MarkerOptions().position(personLocation).title("DANGER");
-                            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_danger));
-                            mMap.addMarker(marker);
+                            Bitmap danger = BitmapFactory.decodeResource(getResources(),R.drawable.danger);
+                            danger = Bitmap.createScaledBitmap(danger, 40,40,false);
+                            mMap.addMarker(new MarkerOptions().position(personLocation).title("Marker").icon(BitmapDescriptorFactory.fromBitmap(danger)));
                         }
 
                 }
@@ -270,9 +270,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 } else {
                                     Log.d(TAG,Double.toString(location.getLatitude()));
                                     personLocation = new LatLng(location.getLatitude(),location.getLongitude());
-                                    Bitmap danger = BitmapFactory.decodeResource(getResources(),R.drawable.danger);
-                                    danger = Bitmap.createScaledBitmap(danger, 40,40,false);
-                                    mMap.addMarker(new MarkerOptions().position(personLocation).title("Marker").icon(BitmapDescriptorFactory.fromBitmap(danger)));
                                 }
                             }
                         }
