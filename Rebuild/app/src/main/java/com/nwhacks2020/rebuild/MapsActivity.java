@@ -39,9 +39,9 @@ import com.nwhacks2020.rebuild.data.DemoModeSingleton;
 import com.nwhacks2020.rebuild.data.RebuildMarkerListSingleton;
 import com.nwhacks2020.rebuild.device_services.DeviceServices;
 import com.nwhacks2020.rebuild.google_maps.LocationUpdates;
+import com.nwhacks2020.rebuild.google_maps.MarkerManager;
 import com.nwhacks2020.rebuild.nearby_connections.MeshNetworkService;
 import com.nwhacks2020.rebuild.nearby_connections.NearbyConnections;
-import com.nwhacks2020.rebuild.rebuild_markers.MarkerTitles;
 import com.nwhacks2020.rebuild.rebuild_markers.RebuildMarker;
 
 import java.util.List;
@@ -152,6 +152,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CurrentLocationSingleton.setCurrentLocation(current);
 
         if (!movedToCurrentLocation) {
+
+            if (DemoModeSingleton.demoMarkersActivated()) {
+                MarkerManager.addSampleLocalMarkers(current);
+            }
+
             LatLng mMapLocation = new LatLng(
                     current.getLatitude(), current.getLongitude()
             );
@@ -159,65 +164,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
             movedToCurrentLocation = true;
         }
-    }
-
-    private void addSampleMarkers() {
-
-        // Centre for Drug Research
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-            49.262201, -123.243708, MarkerTitles.DANGER
-        ));
-
-        // UBC Chem and Biological Engineering
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.262555, -123.247261, MarkerTitles.DANGER
-        ));
-
-        // Djavad Mowafaghian
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.264580, -123.244279, MarkerTitles.DANGER
-        ));
-
-        // Centre for Blood Research
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.262569, -123.245156, MarkerTitles.SHELTER
-        ));
-
-        // UBC Skate Park
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.260938, -123.244514, MarkerTitles.SHELTER
-        ));
-
-        // Starbucks
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.261307, -123.246550, MarkerTitles.FOOD
-        ));
-
-        // Purdy Pavilion
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.263368, -123.245978, MarkerTitles.FOOD
-        ));
-
-        // BC Ambulance Station (South)
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.263034, -123.243475, MarkerTitles.WATER
-        ));
-
-        // Walkway
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.262718, -123.244174, MarkerTitles.NEED_HELP
-        ));
-
-        // Campus Energy Centre
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.261745, -123.245134, MarkerTitles.POWER
-        ));
-
-        // The UBC Department of Psychiatry
-        RebuildMarkerListSingleton.getInstance().addMarkerIfNew(new RebuildMarker(
-                49.263819, -123.244550, MarkerTitles.POWER
-        ));
-
     }
 
     private void repeatUpdateMarkersAndDevicesCount() {
@@ -377,9 +323,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         DeviceServices.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
-        if (DemoModeSingleton.demoMarkersActivated()) {
-            addSampleMarkers();
-        }
         updateAllMarkers();
         repeatUpdateMarkersAndDevicesCount();
     }
