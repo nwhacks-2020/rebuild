@@ -152,15 +152,29 @@ public class NearbyConnections {
                 switch (result.getStatus().getStatusCode()) {
                     case ConnectionsStatusCodes.STATUS_OK:
                         Log.i(TAG, "Connected to device [" + endpointId + "].");
-                        connectedDevices.put(endpointId, endpointId);
+                        if (!connectedDevices.containsKey(endpointId)) {
+                            connectedDevices.put(endpointId, endpointId);
+                        }
                         break;
                     case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                        Log.e(TAG, "Connection rejected by x4device [" + endpointId + "].");
+                        Log.e(
+                                TAG,
+                                "Connection rejected by device [" + endpointId + "]: " +
+                                        result.getStatus().getStatusMessage()
+                        );
                         break;
                     case ConnectionsStatusCodes.STATUS_ERROR:
-                        Log.e(TAG, "Unable to connect to device [" + endpointId + "].");
+                        Log.e(
+                                TAG,
+                                "Unable to connect to device [" + endpointId + "]." +
+                                        result.getStatus().getStatusMessage()
+                        );
                     default:
-                        Log.e(TAG, "Unable to connect to device [" + endpointId + "].");
+                        Log.e(
+                                TAG,
+                                "Unable to connect to device [" + endpointId + "]." +
+                                        result.getStatus().getStatusMessage()
+                        );
                 }
             }
 
