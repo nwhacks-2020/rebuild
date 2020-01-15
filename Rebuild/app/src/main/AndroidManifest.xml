@@ -22,12 +22,12 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".MeshNetworkService"
+            android:name=".nearby_connections.MeshNetworkService"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".PinMenu"
+            android:name=".PinMenuFragment"
             android:theme="@style/FullscreenTheme" />
 
         <activity

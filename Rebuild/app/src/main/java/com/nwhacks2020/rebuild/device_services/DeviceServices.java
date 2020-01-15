@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class DeviceServices {
 
     private static final String TAG = DeviceServices.class.getName();
@@ -21,7 +24,7 @@ public class DeviceServices {
         LocationManager locationManager =
                 (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager == null) {
-            Log.e(TAG, "Failed to access LocationManager.");
+            Log.e(TAG, "Failed to access LocationManager System Service.");
             return true;
         }
 
@@ -59,6 +62,10 @@ public class DeviceServices {
 
     }
 
+    private static boolean deniedByUser(Activity thisActivity, String permission) {
+        return ActivityCompat.shouldShowRequestPermissionRationale(thisActivity, permission);
+    }
+
     public static void requireLocationEnabled(FragmentActivity context) {
         if (DeviceServices.locationDisabled(context)) {
             new LocationRequestDialogFragment().show(
@@ -68,8 +75,22 @@ public class DeviceServices {
         }
     }
 
-    private static boolean deniedByUser(Activity thisActivity, String permission) {
-        return ActivityCompat.shouldShowRequestPermissionRationale(thisActivity, permission);
+
+    public static void vibrate(Context context, long milliseconds) {
+        Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        if (v == null) {
+            Log.e(TAG, "Failed to access Vibrator System Service.");
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(
+                    milliseconds, VibrationEffect.DEFAULT_AMPLITUDE
+            ));
+        } else {
+            // Deprecated in API 26
+            v.vibrate(milliseconds);
+        }
     }
 
 }

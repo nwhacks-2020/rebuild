@@ -34,8 +34,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
+import com.nwhacks2020.rebuild.data.CurrentLocationSingleton;
+import com.nwhacks2020.rebuild.data.DemoModeSingleton;
+import com.nwhacks2020.rebuild.data.RebuildMarkerListSingleton;
 import com.nwhacks2020.rebuild.device_services.DeviceServices;
 import com.nwhacks2020.rebuild.google_maps.LocationUpdates;
+import com.nwhacks2020.rebuild.nearby_connections.MeshNetworkService;
+import com.nwhacks2020.rebuild.nearby_connections.NearbyConnections;
+import com.nwhacks2020.rebuild.rebuild_markers.MarkerTitles;
+import com.nwhacks2020.rebuild.rebuild_markers.RebuildMarker;
 
 import java.util.List;
 
@@ -301,7 +308,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void buttonOpenPinMenu() {
-        Intent intent = new Intent(this, PinMenu.class);
+        Intent intent = new Intent(this, PinMenuFragment.class);
         startActivity(intent);
     }
 

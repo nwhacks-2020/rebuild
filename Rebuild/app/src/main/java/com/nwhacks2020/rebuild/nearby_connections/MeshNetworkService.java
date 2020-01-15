@@ -1,4 +1,4 @@
-package com.nwhacks2020.rebuild;
+package com.nwhacks2020.rebuild.nearby_connections;
 
 import android.app.Service;
 import android.content.Context;
@@ -8,6 +8,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.nwhacks2020.rebuild.data.RebuildMarkerListSingleton;
 
 public class MeshNetworkService extends Service {
 

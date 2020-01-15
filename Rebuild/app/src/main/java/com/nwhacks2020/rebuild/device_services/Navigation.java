@@ -1,4 +1,4 @@
-package com.nwhacks2020.rebuild;
+package com.nwhacks2020.rebuild.device_services;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -7,8 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-public class PinMenu extends FragmentActivity {
-    String items[] = new String[] {" DANGER", "SHELTER","FOOD","WATER","NEED_HELP"};
+import com.nwhacks2020.rebuild.data.CurrentLocationSingleton;
+import com.nwhacks2020.rebuild.data.RebuildMarkerListSingleton;
+import com.nwhacks2020.rebuild.device_services.DeviceServices;
+import com.nwhacks2020.rebuild.rebuild_markers.MarkerTitles;
+import com.nwhacks2020.rebuild.rebuild_markers.RebuildMarker;
+
+/*
+ * Menu to create a new marker on the map.
+ */
+public class PinMenuFragment extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +24,7 @@ public class PinMenu extends FragmentActivity {
         setContentView(R.layout.activity_pin_menu);
     }
 
+    @SuppressWarnings("unused")  // Used in styles.xml, applied to the layout buttons
     public void clicked(View view) {
 
         MarkerTitles type = MarkerTitles.NONE;
@@ -40,9 +49,15 @@ public class PinMenu extends FragmentActivity {
                 break;
         }
 
-        Log.d(PinMenu.class.getName(), "Creating " + type.toString() + " at location " +
-                        CurrentLocationSingleton.getLatitude() + "," +
-                CurrentLocationSingleton.getLongitude());
+        Log.d(
+                PinMenuFragment.class.getName(),
+                "Creating " +
+                        type.toString() +
+                        " at location " +
+                        CurrentLocationSingleton.getLatitude() +
+                        "," +
+                        CurrentLocationSingleton.getLongitude()
+        );
 
         if (type != MarkerTitles.NONE) {
             RebuildMarkerListSingleton.getInstance().addMarkerOverride(new RebuildMarker(
@@ -52,7 +67,7 @@ public class PinMenu extends FragmentActivity {
             ));
         }
 
-        Vibrate.trigger(this, 250);
+        DeviceServices.vibrate(this, 250);
         Toast.makeText(this, "Created a new marker.", Toast.LENGTH_LONG).show();
 
         finish();

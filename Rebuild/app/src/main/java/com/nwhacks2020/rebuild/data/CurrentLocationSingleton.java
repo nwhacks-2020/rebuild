@@ -1,4 +1,4 @@
-package com.nwhacks2020.rebuild;
+package com.nwhacks2020.rebuild.data;
 
 import android.location.Location;
 

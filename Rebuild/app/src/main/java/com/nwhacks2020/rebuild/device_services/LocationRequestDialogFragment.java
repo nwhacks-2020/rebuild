@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.nwhacks2020.rebuild.Navigation;
 import com.nwhacks2020.rebuild.R;
 
 import java.util.Objects;

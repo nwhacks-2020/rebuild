@@ -1,6 +1,7 @@
-package com.nwhacks2020.rebuild;
+package com.nwhacks2020.rebuild.rebuild_markers;
 
 import com.google.gson.annotations.Expose;
+import com.nwhacks2020.rebuild.rebuild_markers.MarkerTitles;
 
 import java.util.Random;
 

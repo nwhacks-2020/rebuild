@@ -1,4 +1,4 @@
-package com.nwhacks2020.rebuild;
+package com.nwhacks2020.rebuild.nearby_connections;
 
 import android.content.Context;
 import android.util.Log;

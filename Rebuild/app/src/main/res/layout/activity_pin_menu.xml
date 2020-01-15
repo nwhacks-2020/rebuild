@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F5F5F5"
     android:orientation="vertical"
-    tools:context=".PinMenu">
+    tools:context=".PinMenuFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

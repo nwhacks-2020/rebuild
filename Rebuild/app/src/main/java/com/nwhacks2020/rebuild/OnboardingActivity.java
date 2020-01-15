@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.nwhacks2020.rebuild.data.DemoModeSingleton;
 import com.nwhacks2020.rebuild.device_services.DeviceServices;
 
 public class OnboardingActivity extends FragmentActivity {
