@@ -16,6 +16,7 @@ import com.google.android.gms.nearby.connection.DiscoveryOptions;
 import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
 import com.google.android.gms.nearby.connection.Payload;
 import com.google.android.gms.nearby.connection.PayloadCallback;
+import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.android.gms.nearby.connection.Strategy;
 
 import java.util.HashMap;
@@ -184,6 +185,33 @@ public class NearbyConnections {
                 connectedDevices.remove(endpointId);
             }
         };
+    }
+
+    // Example of a sample PayloadCallback
+    private class CustomPayloadCallback extends PayloadCallback {
+
+        @Override
+        public void onPayloadReceived(@NonNull String endpointId, Payload payload) {
+            // This always gets the full data of the payload. Will be null if it's not a BYTES
+            // payload.
+            // Check the payload type with payload.getType().
+            byte[] receivedBytes = payload.asBytes();
+            if (receivedBytes == null) {
+                Log.d(TAG, "Empty data received.");
+                return;
+            }
+
+            Log.d(TAG, "Received data: " + new String(receivedBytes));
+
+            // TODO: Action after receiving data
+
+        }
+
+        @Override
+        public void onPayloadTransferUpdate(@NonNull String endpointId,
+                                            @NonNull PayloadTransferUpdate update) {
+            // Action after the completed call to onPayloadReceived
+        }
     }
 
 }
