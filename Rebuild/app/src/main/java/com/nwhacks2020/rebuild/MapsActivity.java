@@ -129,9 +129,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mapFragment.getMapAsync(this);
         }
 
-        // Update current location if possible
-        updateLastKnownLocation();
-
         // Start NearbyConnections
         // Requires Fine Location
         final String connectionServiceId = getString(R.string.package_name);
@@ -166,7 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void repeatUpdateMarkersAndDevicesCount() {
+    private void asyncRepeatUpdateMarkersAndDevicesCount() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
 
@@ -183,7 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             Log.d(TAG, "Updated markers and devices count.");
-            repeatUpdateMarkersAndDevicesCount();
+            asyncRepeatUpdateMarkersAndDevicesCount();
 
         }, 4000);
     }
@@ -324,7 +321,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         DeviceServices.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
 
         updateAllMarkers();
-        repeatUpdateMarkersAndDevicesCount();
+        asyncRepeatUpdateMarkersAndDevicesCount();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
