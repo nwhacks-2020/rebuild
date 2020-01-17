@@ -347,6 +347,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onResume(){
         super.onResume();
 
+        DeviceServices.requireLocationEnabled(this);
+
         // Start location updates
         fusedLocationClient.requestLocationUpdates(
                 LocationUpdates.createLocationRequest(),
@@ -356,6 +358,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         updateLastKnownLocation();
+    }
+
+    // Occurs only when user closes notification tray, in which they may have closed location
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        if (hasFocus) {
+            DeviceServices.requireLocationEnabled(this);
+        }
     }
 
     private class ReceivePayloadListener extends PayloadCallback {
