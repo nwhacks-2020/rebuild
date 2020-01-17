@@ -5,22 +5,22 @@ import android.location.Location;
 @SuppressWarnings("WeakerAccess")
 public class CurrentLocationSingleton {
 
-    private static double latitude = 0.0;
-    private static double longitude = 0.0;
+    private static Location location = null;
 
     public static void setCurrentLocation(Location location) {
-        CurrentLocationSingleton.latitude = location.getLatitude();
-        CurrentLocationSingleton.longitude = location.getLongitude();
+        CurrentLocationSingleton.location = location;
     }
 
     public static double getLatitude() {
-        return latitude;
+        return location.getLatitude();
     }
 
     public static double getLongitude() {
-        return longitude;
+        return location.getLongitude();
     }
 
-
+    public static Location getLocation() {
+        return location;
+    }
 
 }

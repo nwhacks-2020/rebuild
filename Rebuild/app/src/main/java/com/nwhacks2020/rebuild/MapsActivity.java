@@ -70,6 +70,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        DeviceServices.requestPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        DeviceServices.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (locationManager == null) {
             Toast.makeText(this, "Failed to access Location Service.", Toast.LENGTH_LONG).show();
@@ -259,12 +262,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * @return null if the Location cannot be accessed
      */
     private Location getLastKnownLocation() throws SecurityException {
-        DeviceServices.requestPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
-        DeviceServices.requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-
-        // Require location to be active
-        DeviceServices.requireLocationEnabled(this);
-
         // Search all enabled providers for the most accurate location
         List<String> providers = locationManager.getProviders(true);
         Location mostAccurateLocation = null;
@@ -285,9 +282,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Location updateLastKnownLocation() {
         Location l = getLastKnownLocation();
-        if (l != null) {
-            CurrentLocationSingleton.setCurrentLocation(l);
+        if (l == null) {
+            // Return my own last tracked location
+            return CurrentLocationSingleton.getLocation();
         }
+
+        CurrentLocationSingleton.setCurrentLocation(l);
         return l;
     }
 
