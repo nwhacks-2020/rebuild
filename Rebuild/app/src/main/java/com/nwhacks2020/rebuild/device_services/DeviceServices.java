@@ -18,7 +18,7 @@ public class DeviceServices {
 
     private static final String TAG = DeviceServices.class.getName();
 
-    private static final int REQUEST_CODE = 884721;
+    private static final int REQUEST_CODE = 13;
 
     public static boolean locationDisabled(Context context) {
         LocationManager locationManager =
