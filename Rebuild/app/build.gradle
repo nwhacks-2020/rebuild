@@ -1,8 +1,27 @@
 apply plugin: 'com.android.application'
 
+// Initialize the keystore credentials from the keystore.properties file
+def filename = "keystore.properties"
+if (!rootProject.file(filename).exists()) {
+    // Substitute with template if no configuration exists
+    print("No keystore.properties file found.")
+    filename += ".template"
+}
+
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(rootProject.file(filename)))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     defaultConfig {
         applicationId "com.nwhacks2020.rebuild"
         minSdkVersion 21
@@ -10,6 +29,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {

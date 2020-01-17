@@ -88,3 +88,4 @@ lint/tmp/
 
 # Secrets
 google_maps_api.xml
+keystore.properties

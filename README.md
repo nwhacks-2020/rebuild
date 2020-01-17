@@ -2,14 +2,10 @@
 
 ## Quick Setup Instructions
 
-1. Go to [reBuild](https://nwhacks-2020.github.io/rebuild/) website with an **Android** device.
+1. Go to the [REBUILD](https://nwhacks-2020.github.io/rebuild/) website with an **Android** device.
 2. Click on **Download on Android device** to download the app to your phone.
 3. Open the download file.
-4. click on **install** to install the app on your phone.
-
-
-
-
+4. Click on **Install** to install the app on your phone.
 
 ### Codebase
 
@@ -18,7 +14,6 @@ Clone the repository and navigate into the directory:
 git clone https://github.com/nwhacks-2020/rebuild.git
 cd rebuild/
 ```
-
 
 ### Android Studio Set Up
 
@@ -35,3 +30,26 @@ cp Rebuild/app/src/debug/res/values/google_maps_api_template.xml Rebuild/app/src
 In the new file `Rebuild/app/src/debug/res/values/google_maps_api.xml`, uncomment the line with the key and replace the value of the placeholder with your API key. This new file will not be tracked by Git.
 
 Build and run the Android application on a physical or virtual device.
+
+#### Creating a Production Release
+
+##### Step 1: Building a Release Variant
+
+Create a new file in the root directory to hold the secure keystore details:
+```shell
+cp keystore.properties.template keystore.properties
+```
+
+This file will be ignored by Git. Set your keystore information in this file.
+
+Under _Build_, click _Select Build Variant_.
+
+In the _Build Variants_ view which appears, change the **Active Build Variant** from _debug_ to _release_.
+
+Build the application normally to your phone. The keystore credentials will be verified and applied.
+
+##### Step 2: Creating the Signed App
+
+Under _Build_, click _Generate Signed Bundle / APK_.
+
+Follow the instructions, inputting your keystore path and credentials, to create a signed app which can be uploaded to the app store.
