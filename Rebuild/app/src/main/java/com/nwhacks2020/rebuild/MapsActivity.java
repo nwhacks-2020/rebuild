@@ -152,17 +152,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CurrentLocationSingleton.setCurrentLocation(current);
 
         if (!movedToCurrentLocation) {
+            movedToCurrentLocation = true;  // Never needed again
 
             if (DemoModeSingleton.demoMarkersActivated()) {
                 MarkerManager.addSampleLocalMarkers(current);
             }
 
+            Log.d(TAG, "Moving map to current location " + current);
+
             LatLng mMapLocation = new LatLng(
                     current.getLatitude(), current.getLongitude()
             );
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(mMapLocation));
-            mMap.moveCamera(CameraUpdateFactory.zoomTo(startZoom));
-            movedToCurrentLocation = true;
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mMapLocation, startZoom));
         }
     }
 
