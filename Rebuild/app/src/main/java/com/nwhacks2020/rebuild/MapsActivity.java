@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -254,7 +255,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void buttonOpenPinMenu() {
+    public void buttonOpenPinMenu(View view) {
+        Log.i(TAG,"pressed");
         Intent intent = new Intent(this, PinMenuFragment.class);
         startActivity(intent);
     }

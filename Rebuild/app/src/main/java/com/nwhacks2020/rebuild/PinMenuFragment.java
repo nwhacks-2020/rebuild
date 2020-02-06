@@ -17,9 +17,10 @@ import com.nwhacks2020.rebuild.rebuild_markers.RebuildMarker;
  * Menu to create a new marker on the map.
  */
 public class PinMenuFragment extends FragmentActivity {
-
+    public static final String TAG = "Pin Menu";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG,"created");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin_menu);
     }
