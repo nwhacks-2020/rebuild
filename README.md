@@ -1,5 +1,7 @@
 # Rebuild: Disaster Recovery Application
 
+To download the app from the Google Play Store, click here: https://play.google.com/store/apps/details?id=com.nwhacks2020.rebuild
+
 ## Quick Setup Instructions
 
 1. Go to the [REBUILD](https://nwhacks-2020.github.io/rebuild/) website with an **Android** device.
