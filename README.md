@@ -1,4 +1,9 @@
-# Rebuild: Disaster Recovery Application
+# <img src="./readme-img/icon.jpg" width="30"> Rebuild (nwHacks 2020): Disaster Recovery Application
+
+[![Licence](
+    https://img.shields.io/github/license/nwhacks-2020/rebuild)](
+        https://github.com/nwhacks-2020/rebuild/blob/master/LICENSE
+)
 
 To download the app from the Google Play Store, click here: https://play.google.com/store/apps/details?id=com.nwhacks2020.rebuild
 
